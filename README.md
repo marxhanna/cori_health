@@ -1,4 +1,4 @@
-# 4health
+# Cori Health
 Repositório do projeto de TCC Cori Health de BES
 
 Att: Dump do MySQL do banco de dados do projeto.
