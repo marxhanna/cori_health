@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Cori Health</title>
+    <script
+      src="https://code.jquery.com/jquery-3.1.1.min.js"
+      integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+      crossorigin="anonymous"
+    ></script>
+    <link rel="icon" href="/imgs/logo-alt.svg" />
+    <link href="/exames/style.css" rel="stylesheet" type="text/css" />
+    <script src="/semantic/semantic.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/semantic/semantic.min.css" />
+  </head>
+
+  <body>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Esta função será chamada assim que a página for carregada
+
+        // Fazer o fetch para a rota /api/receber_descricao
+        fetch("/api/receber_descricao", {
+          method: "post", // Ou 'POST' se você precisar enviar dados ao servidor
+        })
+          .then(function (response) {
+            // Verificar se a resposta da solicitação está OK
+            if (!response.ok) {
+              throw new Error("Erro ao receber dados do servidor");
+            }
+            // Transformar a resposta em JSON
+            return response.json();
+          })
+          .then(function (data) {
+            // Manipular os dados recebidos do servidor
+            console.log(data); // Exemplo: exibir os dados no console
+          })
+          .catch(function (error) {
+            console.error("Erro:", error);
+          });
+      });
+    </script>
+    <div class="header-exames">
+      <h1>EXAMES</h1>
+    </div>
+    <form action="/api/receber_descricao" method="post">
+  <div class="corpo-exames">
+    <% for (var i = 0; i < data.length; i++) { %>
+    <div class="segmento-exame" onclick="abrirModal(<%= i %>);">
+      <div class="conteudo-exame">
+        <div class="imagem-exame">
+          <img src="/imgs/exames_icons/<%= data[i].Exame %>.png" />
+        </div>
+        <span><%= data[i].Exame %></span>
+      </div>
+
+      <!-- Modal para <%= data[i].Exame %> -->
+      <div class="ui modal modal-exame-<%= i %>">
+        <div class="header"><%= data[i].Exame %></div>
+        <div class="image content">
+          <img class="image" src="/imgs/exames/<%= data[i].Exame %>.jpg" />
+          <div class="description">
+            <p><%= data[i].Descricao %></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <% } %>
+  </div>
+  <script>
+    function abrirModal(i) {
+      $(`.modal-exame-${i}`).modal("show");
+    }
+  </script>
+
+    <div class="navbar">
+      <div class="navbar-icons">
+        <img src="/imgs/icons/home.png" />
+        <img src="/imgs/icons/inactive-plus.png" />
+        <img src="/imgs/icons/inactive-time.png" />
+        <img src="/imgs/icons/inactive-gear.png" />
+      </div>
+    </div>
+  </body>
+</html>

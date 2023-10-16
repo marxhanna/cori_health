@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Cori Health</title>
+    <link rel="icon" href="imgs/logo-alt.svg" />
+    <link href="inicio/style.css" rel="stylesheet" type="text/css" />
+    <script src="semantic/semantic.js"></script>
+    <link rel="stylesheet" type="text/css" href="semantic/semantic.min.css" />
+    <script src="inicio/script.js"></script>
+  </head>
+
+  <body>
+    <div class="index-header">
+      <div class="user-info">
+        <img class="user-pic" src="imgs/user.jpeg" />
+        <span>Olá, Marina!</span>
+      </div>
+
+      <div class="search-bar">
+        <div class="ui icon input">
+          <input
+            type="text"
+            placeholder="Pesquisar sinais de alarme, exames..."
+          />
+          <i class="search icon"></i>
+        </div>
+      </div>
+    </div>
+    <form action="/api/receber_alarme" method="post">
+      <div class="traumas">
+        <div class="btn-traumas">
+          <button value="cefaleia">
+            <img src="imgs/icons/cefaleia.png" class="img_trauma" />
+          </button>
+          <span>Cefaléia</span>
+        </div>
+        <div class="btn-traumas">
+          <button>
+            <img src="imgs/icons/dor-abdominal.png" class="img_trauma" />
+          </button>
+          <span>Dor Abdominal</span>
+        </div>
+        <div class="btn-traumas">
+          <button>
+            <img src="imgs/icons/febre.png" class="img_trauma" />
+          </button>
+          <span>Febre</span>
+        </div>
+        <div class="btn-traumas">
+          <button>
+            <img src="imgs/icons/dor-toracica.png" class="img_trauma" />
+          </button>
+          <span>Dor Torácica</span>
+        </div>
+        <div class="btn-traumas">
+          <button>
+            <img src="imgs/icons/lombalgia.jpeg" class="img_trauma" />
+          </button>
+          <span>Lombalgia</span>
+        </div>
+      </div>
+      <div class="acao">
+        <input type="submit" value="INICIAR" />
+      </div>
+    </form>
+
+    <h3 class="title">Sinais de Alarme ></h3>
+    <div class="alarme">
+      <button>Mudança do padrão de dor</button>
+      <button>Refratária ao tratamento</button>
+      <button>Piora progressiva da dor</button>
+      <button>Início Súbito</button>
+      <button>Mudança do padrão de dor</button>
+      <button>Refratária ao tratamento</button>
+      <button>Piora progressiva da dor</button>
+      <button>Início Súbito</button>
+    </div>
+
+    <h3 class="title">Exames ></h3>
+    <div class="exames">
+      <div class="btn-exames">
+        <button>
+          <img src="imgs/icons/creatinina-serica.png" class="img_trauma" />
+        </button>
+        <span>Creatinina Sérica</span>
+      </div>
+      <div class="btn-exames">
+        <button>
+          <img src="imgs/icons/ecografia-abdominal.png" class="img_trauma" />
+        </button>
+        <span>Ecografia Abdominal</span>
+      </div>
+      <div class="btn-exames">
+        <button>
+          <img src="imgs/icons/exames-sericos.png" class="img_trauma" />
+        </button>
+        <span>Exames Séricos</span>
+      </div>
+      <div class="btn-exames">
+        <button>
+          <img src="imgs/icons/fundoscopia.png" class="img_trauma" />
+        </button>
+        <span>Fundoscopia</span>
+      </div>
+      <div class="btn-exames">
+        <button>
+          <img src="imgs/icons/hemograma.png" class="img_trauma" />
+        </button>
+        <span>Hemograma</span>
+      </div>
+      <div class="btn-exames">
+        <button>
+          <img src="imgs/icons/PCR.png" class="img_trauma" />
+        </button>
+        <span>PCR</span>
+      </div>
+      <div class="btn-exames">
+        <button>
+          <img src="imgs/icons/proteinuria.png" class="img_trauma" />
+        </button>
+        <span>Proteinúria</span>
+      </div>
+      <div class="btn-exames">
+        <button>
+          <img src="imgs/icons/provas-autoimunes.png" class="img_trauma" />
+        </button>
+        <span>Provas Autoimunes</span>
+      </div>
+      <div class="btn-exames">
+        <button>
+          <img src="imgs/icons/vhs.png" class="img_trauma" />
+        </button>
+        <span>VHS</span>
+      </div>
+      <div class="btn-exames">
+        <button>
+          <img src="imgs/icons/tomo.png" class="img_trauma" />
+        </button>
+        <span>Tomografia de Crânio</span>
+      </div>
+      <div class="btn-exames">
+        <button>
+          <img src="imgs/icons/punção.png" class="img_trauma" />
+        </button>
+        <span>Punção Lombar</span>
+      </div>
+      <div class="btn-exames">
+        <button>
+          <img src="imgs/icons/vasos.png" class="img_trauma" />
+        </button>
+        <span>Vasos Cranianos e Cervicais</span>
+      </div>
+      <div class="btn-exames">
+        <button>
+          <img src="imgs/icons/ressonancia.png" class="img_trauma" />
+        </button>
+        <span>Rossonancia Magnética</span>
+      </div>
+    </div>
+
+    <div class="navbar">
+      <div class="navbar-icons">
+        <img src="imgs/icons/home.png" />
+        <img src="imgs/icons/inactive-plus.png" />
+        <img src="imgs/icons/inactive-time.png" />
+        <img src="imgs/icons/inactive-gear.png" />
+      </div>
+    </div>
+  </body>
+</html>

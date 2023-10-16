@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Cori Health</title>
+    <link rel="icon" href="/imgs/logo-alt.svg" />
+    <link href="/sda/style.css" rel="stylesheet" type="text/css" />
+    <script src="/semantic/semantic.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="/semantic/semantic.min.css" />
+  </head>
+
+  <body>
+    <div class="header">
+      <div class="user-info">
+        <img class="user-pic" src="/imgs/user.jpeg" />
+        <span>Olá, Marina!</span>
+      </div>
+    </div>
+
+    <div class="ui mini breadcrumb">
+      <a class="section">Home</a>
+      <i class="right chevron icon divider"></i>
+      <div class="active section">Sinais de Alarme</div>
+      <i class="right chevron icon divider"></i>
+      <a class="section">Hipótese Diagnóstica</a>
+    </div>
+
+    <div class="trauma-selecionado">
+      <img src="/imgs/icons/cefaleia.png" />
+      <br />
+      <span>Cefaléia</span>
+    </div>
+
+    <h2>Selecione o Sinal de Alarme</h2>
+    <form action="/api/receber_diagnostico" method="post">
+      <div class="container">
+        <div class="ui two cards">
+          <% for (var i = 0; i < dados.length; i++) { %>
+          <div class="card">
+            <div class="ui checkbox">
+              <input
+                type="checkbox"
+                name="sinais_selecionados"
+                value="<%= dados[i].sinal_alarme %>"
+              />
+              <label><%= dados[i].sinal_alarme %></label>
+            </div>
+          </div>
+          <% } %>
+        </div>
+      </div>
+      <div class="btn-next" id="btn-next">
+        <button type="submit">
+          <img src="/imgs/icons/arrow.png" />
+        </button>
+      </div>
+    </form>
+
+    <div class="navbar">
+      <div class="navbar-icons">
+        <a href="../inicio/index.html"><img src="/imgs/icons/home.png" /></a>
+        <img src="/imgs/icons/inactive-plus.png" />
+        <img src="/imgs/icons/inactive-time.png" />
+        <img src="/imgs/icons/inactive-gear.png" />
+      </div>
+    </div>
+  </body>
+</html>

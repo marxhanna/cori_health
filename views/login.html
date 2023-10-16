@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Seleção de Banco de Dados</title>
+  </head>
+  <body>
+    <h1>Bundinha:</h1>
+    <br />
+    <div id="buttonContainer">
+      <div id="sinalContainer">
+        <button class="selectable-button" name="cefaleia">Cefaléia</button>
+        <button class="selectable-button" name="Febre">Febre</button>
+        <br />
+        <br />
+      </div>
+
+      <button class="selectable-button" name="dor abdominal">
+        Dor Abdominal
+      </button>
+      <button class="selectable-button" name="Mudança do padrão de dor">
+        Mudança do padrão de dor
+      </button>
+      <button class="selectable-button" name="Refratária ao tratamento">
+        Refratária ao tratamento
+      </button>
+      <button class="selectable-button" name="Rigidez de nuca">
+        Rigidez de nuca
+      </button>
+      <button class="selectable-button" name="json" id="jsonButton">
+        JSON
+      </button>
+      <button class="selectable-button" name="exames" id="exames">
+        Exames
+      </button>
+      <button class="selectable-button" name="descricao" id="descricao">
+        Descrição
+      </button>
+    </div>
+
+    <div id="results">
+      <pre id="output"></pre>
+    </div>
+
+    <script>
+      const buttonContainer = document.getElementById("buttonContainer");
+      const selectedButtons = [];
+
+      buttonContainer.addEventListener("click", (event) => {
+        const button = event.target;
+        if (button.classList.contains("selectable-button")) {
+          button.classList.toggle("selected");
+          updateSelectedButtons();
+        }
+      });
+
+      buttonContainer.addEventListener("contextmenu", (event) => {
+        event.preventDefault();
+        const button = event.target;
+        if (button.classList.contains("selectable-button")) {
+          button.classList.remove("selected");
+          updateSelectedButtons();
+        }
+      });
+
+      const updateSelectedButtons = () => {
+        selectedButtons.length = 0;
+        const selectedButtonElements = buttonContainer.querySelectorAll(
+          "button.selectable-button.selected"
+        );
+        selectedButtonElements.forEach((button) => {
+          selectedButtons.push(button.getAttribute("name"));
+        });
+      };
+
+      const jsonButton = document.getElementById("jsonButton");
+      jsonButton.addEventListener("click", async () => {
+        console.log("Nomes dos botões selecionados:", selectedButtons);
+
+        const postData = { selectedButtons };
+
+        fetch("/api/receber_diagnostico", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(postData),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data); // Receba a resposta do backend
+          })
+          .catch((error) => {
+            console.error("Erro ao fazer a solicitação:", error);
+          });
+      });
+
+      const examesButton = document.getElementById("exames");
+      examesButton.addEventListener("click", async () => {
+        console.log("Botão Exames clicado");
+
+        fetch("/api/receber_exame", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ selectedButtons }), // Envie os botões selecionados como JSON
+        })
+          .then((response) => response.text())
+          .then((data) => {
+            document.getElementById("output").textContent = data; // Atualize a saída com a resposta do backend
+          })
+          .catch((error) => {
+            console.error("Erro ao fazer a solicitação:", error);
+          });
+      });
+
+      const descricaoButton = document.getElementById("descricao");
+      descricaoButton.addEventListener("click", async () => {
+        console.log("Botão Descrição clicado");
+
+        fetch("/api/receber_descricao", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ selectedButtons }), // Envie os botões selecionados como JSON
+        })
+          .then((response) => response.text())
+          .then((data) => {
+            document.getElementById("output").textContent = data; // Atualize a saída com a resposta do backend
+          })
+          .catch((error) => {
+            console.error("Erro ao fazer a solicitação:", error);
+          });
+      });
+    </script>
+  </body>
+</html>
