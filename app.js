@@ -93,35 +93,42 @@ app.post("/api/receber_diagnostico", async (req, res) => {
     const selectedCheckboxes = req.body.sinais_selecionados;
     console.log(selectedCheckboxes);
 
-    const sql = `SELECT DISTINCT Diagnostico
-FROM (
-    SELECT sinal_alarme, Diagnostico1 AS Diagnostico FROM sinais
-    UNION ALL
-    SELECT sinal_alarme, Diagnostico2 FROM sinais
-    UNION ALL
-    SELECT sinal_alarme, Diagnostico3 FROM sinais
-    UNION ALL
-    SELECT sinal_alarme, Diagnostico4 FROM sinais
-    UNION ALL
-    SELECT sinal_alarme, Diagnostico5 FROM sinais
-    UNION ALL
-    SELECT sinal_alarme, Diagnostico6 FROM sinais
-    UNION ALL
-    SELECT sinal_alarme, Diagnostico7 FROM sinais
-    UNION ALL
-    SELECT sinal_alarme, Diagnostico8 FROM sinais
-	UNION ALL
-    SELECT sinal_alarme, Diagnostico9 FROM sinais
-) AS subquery
-WHERE Diagnostico IS NOT NULL
-AND sinal_alarme IN (?);
-`;
+    // Verifique se selectedCheckboxes é uma matriz; se não for, converta-o em uma matriz.
+    const selectedCheckboxesArray = Array.isArray(selectedCheckboxes)
+      ? selectedCheckboxes
+      : [selectedCheckboxes];
 
-    const values = selectedCheckboxes;
-    consultaResult = JSON.parse(
-      JSON.stringify(await queryDatabase(cefaleiaPool, sql, values))
+    const placeholders = selectedCheckboxesArray.map(() => "?").join(",");
+    const sql = `
+      SELECT DISTINCT Diagnostico
+      FROM (
+          SELECT sinal_alarme, Diagnostico1 AS Diagnostico FROM sinais
+          UNION ALL
+          SELECT sinal_alarme, Diagnostico2 FROM sinais
+          UNION ALL
+          SELECT sinal_alarme, Diagnostico3 FROM sinais
+          UNION ALL
+          SELECT sinal_alarme, Diagnostico4 FROM sinais
+          UNION ALL
+          SELECT sinal_alarme, Diagnostico5 FROM sinais
+          UNION ALL
+          SELECT sinal_alarme, Diagnostico6 FROM sinais
+          UNION ALL
+          SELECT sinal_alarme, Diagnostico7 FROM sinais
+          UNION ALL
+          SELECT sinal_alarme, Diagnostico8 FROM sinais
+         
+      ) AS subquery
+      WHERE Diagnostico IS NOT NULL
+      AND sinal_alarme IN (${placeholders});
+    `;
+
+    const consultaResult = await queryDatabase(
+      cefaleiaPool,
+      sql,
+      selectedCheckboxesArray
     );
-    console.log(consultaResult);
+
     res.render("diagnostico", { data: consultaResult });
   } catch (error) {
     console.error(error);
@@ -137,11 +144,17 @@ app.post("/api/receber_exame", async (req, res) => {
   try {
     const receivedData = req.body.sinais_selecionados;
 
-    if (receivedData == null) {
-      throw new Error("Received data is missing");
+    if (!Array.isArray(receivedData)) {
+      throw new Error("Received data is not an array");
     }
 
-    const sql = `SELECT DISTINCT Exame
+    if (receivedData.length === 0) {
+      throw Error("Received data array is empty");
+    }
+
+    const placeholders = receivedData.map(() => "?").join(",");
+    const sql = `
+      SELECT DISTINCT Exame
       FROM (
           SELECT DiagnosticoNome AS Diagnostico, Exame1 AS Exame FROM diagnostico
           UNION ALL
@@ -154,16 +167,47 @@ app.post("/api/receber_exame", async (req, res) => {
           SELECT DiagnosticoNome, Exame5 FROM Diagnostico
           UNION ALL
           SELECT DiagnosticoNome, Exame6 FROM Diagnostico
+          UNION ALL
+          SELECT DiagnosticoNome, Exame7 FROM Diagnostico
       ) AS subquery
       WHERE Exame IS NOT NULL
-      AND Diagnostico IN (?);`;
+      AND Diagnostico IN (${placeholders});`;
 
     const values = receivedData;
     examesResult = JSON.parse(
       JSON.stringify(await queryDatabase(cefaleiaPool, sql, values))
     );
-    console.log(examesResult);
-    res.render("exames", { data: examesResult });
+
+    // Extrair os valores Exame dos resultados da primeira consulta
+    const exameValues = examesResult.map((item) => item.Exame);
+
+    const sql_descricao = `SELECT DISTINCT Exame, Descricao
+                FROM Exame
+                WHERE Exame IN (?);
+                `;
+
+    const descricaoResult = {};
+
+    for (const exame of exameValues) {
+      const descricaoData = await queryDatabase(
+        cefaleiaPool,
+        sql_descricao,
+        exame
+      );
+      if (descricaoData.length > 0) {
+        descricaoResult[exame] = descricaoData[0].Descricao;
+      }
+    }
+
+    // Junte os dados em um único JSON
+    const combinedData = examesResult.map((item) => {
+      return {
+        Exame: item.Exame,
+        Descricao: descricaoResult[item.Exame] || "Descrição não encontrada",
+      };
+    });
+
+    res.render("exames", { data: combinedData });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
