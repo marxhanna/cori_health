@@ -58,14 +58,12 @@ body {
   align-items: center;
 }
 
-.btn-traumas div {
+.btn-traumas button {
   background-color: white;
   height: 70px;
   width: 70px;
+  border: none;
   border-radius: 35px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .btn-traumas span {
@@ -170,8 +168,7 @@ body {
 .img_trauma {
   height: 50px;
 }
-
-.selected {
+.btn-traumas button:focus {
   border: 2.5px solid #504dff;
 }
 

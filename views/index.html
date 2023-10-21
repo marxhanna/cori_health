@@ -4,11 +4,6 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <title>Cori Health</title>
-    <script
-      src="https://code.jquery.com/jquery-3.1.1.min.js"
-      integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-      crossorigin="anonymous"
-    ></script>
     <link rel="icon" href="imgs/logo-alt.svg" />
     <link href="inicio/style.css" rel="stylesheet" type="text/css" />
     <script src="semantic/semantic.js"></script>
@@ -36,33 +31,33 @@
     <form action="/api/receber_alarme" method="post">
       <div class="traumas">
         <div class="btn-traumas">
-          <div id="cefaleia" onclick="selectBtn('cefaleia')">
+          <button value="cefaleia">
             <img src="imgs/icons/cefaleia.png" class="img_trauma" />
-          </div>
+          </button>
           <span>Cefaléia</span>
         </div>
         <div class="btn-traumas">
-          <div id="dor-abdominal" onclick="selectBtn('dor-abdominal')">
+          <button>
             <img src="imgs/icons/dor-abdominal.png" class="img_trauma" />
-          </div>
+          </button>
           <span>Dor Abdominal</span>
         </div>
         <div class="btn-traumas">
-          <div id="febre" onclick="selectBtn('febre')">
+          <button>
             <img src="imgs/icons/febre.png" class="img_trauma" />
-          </div>
+          </button>
           <span>Febre</span>
         </div>
         <div class="btn-traumas">
-          <div id="dor-toracica" onclick="selectBtn('dor-toracica')">
+          <button>
             <img src="imgs/icons/dor-toracica.png" class="img_trauma" />
-          </div>
+          </button>
           <span>Dor Torácica</span>
         </div>
         <div class="btn-traumas">
-          <div id="lombalgia" onclick="selectBtn('lombalgia')">
+          <button>
             <img src="imgs/icons/lombalgia.jpeg" class="img_trauma" />
-          </div>
+          </button>
           <span>Lombalgia</span>
         </div>
       </div>
@@ -161,16 +156,7 @@
         <button>
           <img src="imgs/icons/ressonancia.png" class="img_trauma" />
         </button>
-        <span>Ressonância Magnética</span>
-      </div>
-      <div class="btn-exames">
-        <button>
-          <img
-            src="imgs/exames_icons/Angiografia Cerebral.png"
-            class="img_trauma"
-          />
-        </button>
-        <span>Angiografia Cerebral</span>
+        <span>Rossonancia Magnética</span>
       </div>
     </div>
 
