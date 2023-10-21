@@ -20,10 +20,10 @@ app.get("/", (req, res) =>
 );
 
 const cefaleiaConfig = {
-  host: "localhost",
-  user: "root",
-  password: "",
-  database: "cefaleia",
+  host: "corihealth.com.br",
+  user: "u469350976_4health",
+  password: "bundinha@@2020bB",
+  database: "u469350976_cefaleia",
   connectionLimit: 10,
 };
 
